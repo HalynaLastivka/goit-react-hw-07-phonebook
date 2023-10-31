@@ -57,7 +57,7 @@ const contactSlice = createSlice({
   name: 'contactSlice',
   initialState: INITIAL_STATE,
   reducers: {
-    setFilterTerm: (state, action) => {
+    setFilter: (state, action) => {
       state.filter = action.payload;
     },
   },

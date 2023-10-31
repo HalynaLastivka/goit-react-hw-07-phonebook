@@ -1,12 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import { deleteContact, fetchContacts } from 'redux/contactReducer';
-
+import {
+  selectContacts,
+  selectContactsError,
+  selectContactsFilter,
+  selectContactsIsLoading,
+} from 'redux/products.selectors';
+import Loader from 'components/Loader/Loader';
+import ErrorMessage from 'components/Error/ErrorMessage';
 import css from './ContactList.module.css';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.contacts.filter);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectContactsFilter);
+  const error = useSelector(selectContactsError);
+  const isLoading = useSelector(selectContactsIsLoading);
 
   const dispatch = useDispatch();
 
@@ -15,7 +24,6 @@ const ContactList = () => {
   };
 
   const getFilteredContacts = () => {
-    console.log(contacts);
     if (!filter) {
       return contacts;
     }
@@ -33,20 +41,24 @@ const ContactList = () => {
   // const contFilter = contacts;
 
   return (
-    <ul>
-      {contFilter.map(contact => (
-        <li key={contact.id}>
-          {contact.name}: {contact.phone}
-          <button
-            onClick={() => handleDelete(contact.id)}
-            type="button"
-            className={css.btndelete}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {isLoading && <Loader />}
+      {error && <ErrorMessage message={error} />}
+      <ul>
+        {contFilter.map(contact => (
+          <li key={contact.id}>
+            {contact.name}: {contact.phone}
+            <button
+              onClick={() => handleDelete(contact.id)}
+              type="button"
+              className={css.btndelete}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

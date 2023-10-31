@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactReducer';
 import css from './FormPhone.module.css';
+import { selectContacts } from 'redux/products.selectors';
 import { nanoid } from 'nanoid';
 
 export const FormPhone = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(selectContacts);
 
   const dispatch = useDispatch();
 
