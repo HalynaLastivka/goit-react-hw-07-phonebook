@@ -12,7 +12,7 @@ export const fetchContacts = createAsyncThunk(
     try {
       const contacts = await requesContacts();
 
-      return contacts; // ЦЕ БУДЕ ЗАПИСАНО В ЕКШИН ПЕЙЛОАД
+      return contacts;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
